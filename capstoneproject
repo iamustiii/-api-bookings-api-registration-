@@ -1,2 +1,40 @@
 /api/bookings/
 /api/registration/
+import mysql.connector
+
+# Replace these with your actual database credentials
+db_config = {
+    'user': 'username',
+    'password': 'password',
+    'host': 'localhost',
+    'database': 'restaurant_db'
+}
+
+# Create a connection
+connection = mysql.connector.connect(**db_config)
+
+# Now you can execute SQL queries using 'connection'
+# For example:
+cursor = connection.cursor()
+cursor.execute("SELECT * FROM menu_items")
+result = cursor.fetchall()
+
+# Remember to close the connection when done
+connection.close()
+
+
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# Endpoint to create a booking
+@app.route('/create_booking', methods=['POST'])
+def create_booking():
+    data = request.json  # Assuming the data is sent in JSON format
+    # Process the booking data and insert into the database
+    # Return a response indicating success or failure
+    response = {'message': 'Booking created successfully'}
+    return jsonify(response)
+
+if __name__ == '__main__':
+    app.run()
